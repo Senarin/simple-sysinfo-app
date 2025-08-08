@@ -1,0 +1,59 @@
+ *{font-family: "NanumSquareNeo", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;}
+
+  :root{
+    --bg-color: #BABABA;
+    --doc-color: #06BBFA;
+    --tab-color: #33AAFF;
+    --tab-active-color: #0077DD;
+    --header-height: 7em;
+  }
+
+  body{
+    background-color: var(--bg-color);
+    margin: var(--header-height) 0 0 1em;
+    padding: 0.5em;
+    font-size: 0.875rem;
+    line-height: 1.73;
+  }
+
+  #app-header{
+    height: var(--header-height);
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--tab-color);
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0 1em;
+    margin-bottom: 2em;
+  }
+
+  #app-button-main{
+    display: flex;
+    gap: 0.25em;
+    margin-right: 2em;
+  }
+
+  abbr{cursor: help;}
+
+  button{
+    background-color: var(--tab-active-color);
+    border: none;
+    border-radius: 1em;
+    color: white;
+    padding: 0.5em 1em;
+    cursor: pointer;
+  }
+
+  button:hover{background-color: var(--doc-color);}
+
+  @media (prefers-color-scheme: dark) {
+   body {
+    background-color: #454545;
+    color: rgb(255,255,255);
+   }
+  }

@@ -1,0 +1,48 @@
+{
+  "name": "simple-sysinfo-app",
+  "version": "0.0.1",
+  "description": "Simple System Information Electron App",
+  "license": "MIT",
+  "author": "Chunseong MediaConnect",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "systeminformation": "^5.27.7"
+  },
+  "devDependencies": {
+    "@electron/fuses": "^1.8.0",
+    "electron": "^37.2.6",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.chunseong.sysinfoapp",
+    "productName": "Simple System Info",
+    "executableName": "sysinfoapp",
+    "files": [
+      "index.html",
+      "index.js",
+      "renderer.js",
+      "assets/**/*",
+      "fonts/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "compression": "maximum"
+  }
+}

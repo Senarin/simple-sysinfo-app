@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+ <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+ <title>System Information</title>
+ <link rel="stylesheet" href="./fonts/pretendard/web/static/pretendard.css" />
+<link rel="stylesheet" href="./fonts/nanumsquareneo/web/nanumsquareneo.css" />
+ <link rel="stylesheet" href="./assets/style.css" />
+ </head>
+ <body id="mainbody">
+  <div id="app-header">
+   <h1>시스템 정보 <button onclick="aboutApp();">앱 정보</button></h1>
+   <div id="app-button-main"><button onclick="window.location.reload();">새로고침</button> <button onclick="openSystemSettings();">시스템 설정 열기</button> <button onclick="window.close();">닫기</button></div>
+  </div>
+  <div id="loading">
+   <p><img src="./assets/loading.gif" alt="Now Loading..." style="width: 14px; height: auto;" /> 시스템 정보를 불러오는 중입니다...<br />
+    <span id="loading-progress"></span>
+   </p>
+  </div>
+  <div id="sysinfo-body" style="display: none;">
+   <p>시스템에서 다음 하드웨어 및 소프트웨어 구성이 검색되었습니다.<br /><span id="sysinfo-datetime"></span></p>
+   <h3>디바이스 정보</h3>
+   <ul>
+    <li>디바이스 이름 : <span id="device-canonical-name"></span></li>
+    <li>시스템 제조업체 : <span id="device-vendor"></span></li>
+    <li>시스템 모델 : <span id="device-model"></span></li>
+    <li>폼 팩터 : <span id="device-formfactor"></span></li>
+   </ul>
+
+   <h3>프로세서(CPU) 정보</h3>
+   <ul>
+    <li>CPU 공급업체 : <span id="processor-vendor"></span>
+    <li>CPU 종류 : <span id="processor-info"></span>
+     <ul>
+      <li>동작 프로세서 코어 수 : <span id="processor-physical-cores"></span> 물리 코어, <span id="processor-threads"></span> 스레드</li>
+      <li>기본 동작 속도 : <span id="processor-clockspeed"></span></li>
+     </ul>
+    </li>
+    <li>CPU 소켓 : <span id="processor-socket"></span></li>
+    <li>CPU 아키텍쳐(<abbr title="Instruction Set Architecture">ISA</abbr> 종류) : <span id="processor-arch"></span></li>
+   </ul>
+
+   <h3>메모리 정보</h3>
+   <ul>
+    <li>설치된 물리 메모리(RAM) : <span id="memory-size"></span></li>
+     <ul>
+      <li>메모리 종류 : <span id="memory-type"></span></li>
+      <li>메모리 모듈 수 : <span id="memory-modules"></span></li>
+      <li>사용 가능한 최대 메모리 용량 : <span id="memory-total"></span></li>
+     </ul>
+    </li>
+    <li>가상 메모리(스왑 영역) : <span id="memory-swap-size"></span></li>
+   </ul>
+
+   <h3>OS 정보</h3>
+   <ul>
+    <li>OS 플랫폼 : <span id="os-platform"></span></li>
+    <li>OS 버전/배포판명 : <span id="os-distro"></span></li>
+    <li>커널 버전 : <span id="system-version"></span></li>
+    <li>UEFI 사용 여부 : <span id="system-uefi"></span></li>
+   </ul>
+
+   <h3>그래픽 장치 정보</h3>
+   <h4>GPU (그래픽 카드)</h4>
+   <ul id="gpu-list"></ul>
+   <h4>디스플레이 (모니터)</h4>
+   <ul id="display-list"></ul>
+
+   <h3>저장장치 정보</h3>
+   <ul id="storage-list"></ul>
+
+   <h3>오디오 장치 정보</h3>
+   <ul id="audio-list"></ul>
+
+   <h3>네트워크 정보 <button onclick="checkInetConnection();">인터넷 연결 상태 확인</button></h3>
+   <ul id="network-list"></ul>
+
+   <h3>블루투스 장치 정보 <button id="bluetooth-list-toggle" onclick="toggleSection('bluetooth-list',this.id)">+</button></h3>
+   <ul id="bluetooth-list" style="display: none;"></ul>
+
+  </div>
+ <script src="./renderer.js"></script>
+ </body>
+</html>
