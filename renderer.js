@@ -227,7 +227,7 @@ function loadSysInfo(){
     diskSizeOutput.innerHTML = `저장 용량 : ${diskSize}`;
     diskFirmwareRevOutput.innerHTML = `펌웨어 버전 : ${diskFirmwareRev}`;
 
-    // 윈도우 환경에서 NVMe SSD의 실제 일련번호 가져오기. 일부 윈도우 버전에서 NVMe 일련번호가 제대로 표시되지 않는 경우(해당 장치의 EUI-64/NGUID 값이 대신 표시)가 있어 PowerShell을 통해 가져옴.
+    // 윈도우 환경에서 NVMe SSD의 실제 일련번호 가져오기. 일부 윈도우 버전에서 NVMe SSD의 일련번호가 올바르게 출력되지 않는 경우(해당 장치의 EUI-64/NGUID 값이 대신 출력)가 있어 PowerShell을 통해 가져옴.
     // 참고 URL: https://www.dell.com/support/kbdoc/en-us/000218659/windows-reported-serial-number-does-not-match-serial-number-printed-on-nvme-drive
     if(sysinfo.platform == "win32" && diskInterface.toLowerCase() == "nvme"){
       execFile("powershell.exe",["-Command",`Get-PhysicalDisk -SerialNumber '${diskSerialNo}' | Select -Property AdapterSerialNumber`],(err,stdout,stderr) => {
