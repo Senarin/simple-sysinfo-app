@@ -66,6 +66,7 @@ function loadSysInfo(){
   }).then(si.chassis().then(data => {
    document.getElementById("device-formfactor").innerHTML = data.type;
   })).then(si.cpu().then(data => {
+   // CPU 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "CPU 정보 불러오는 중...";
    
    document.getElementById("processor-vendor").innerHTML = data.vendor;
@@ -76,22 +77,26 @@ function loadSysInfo(){
    document.getElementById("processor-socket").innerHTML = data.socket;
    document.getElementById("processor-clockspeed").innerHTML = `${data.speed}GHz`;
   })).then(si.osInfo().then(data => {
+   // 운영체제 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "OS 정보 불러오는 중...";
    document.getElementById("os-platform").innerHTML = `${data.platform} (${sysinfo.platform})`;
    document.getElementById("os-distro").innerHTML = `${data.distro} ${data.release} (빌드 ${data.build})`;
    document.getElementById("system-version").innerHTML = data.kernel;
    document.getElementById("system-uefi").innerHTML = (data.uefi) ? "예" : "아니오";
   })).then(si.mem().then(data => {
+   // 메모리 전반 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "메모리 정보 불러오는 중...";
    document.getElementById("memory-total").innerHTML = `${byteCalc.convertBytes(data.total)} (${data.total} 바이트)`;
    document.getElementById("memory-swap-size").innerHTML = `${byteCalc.convertBytes(data.swaptotal)} (${data.swaptotal} 바이트)`;
   })).then(si.memLayout().then(data => {
+   // 물리 메모리 모듈 정보 불러오기
    let moduleSize = [];
    for(let i=0;i<data.length;i++){moduleSize[i] = data[i].size;}
    document.getElementById("memory-size").innerHTML = `${byteCalc.convertBytes(moduleSize.reduce((a,b) => a+b,0))} (${moduleSize.reduce((a,b) => a+b,0)} 바이트)`;
    document.getElementById("memory-modules").innerHTML = `${data.length}개`;
    document.getElementById("memory-type").innerHTML = `${data[0].type} ${data[0].formFactor} ${(data[0].ecc) ? "ECC" : "Non-ECC"} (동작 속도 ${data[0].clockSpeed} MT/s)`;
   })).then(si.graphics().then(data => {
+   // 그래픽 어댑터(VGA) 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "그래픽 정보 불러오는 중...";
  
    let gpuListOutput = document.getElementById("gpu-list");
@@ -137,6 +142,7 @@ function loadSysInfo(){
    let displayListOutput = document.getElementById("display-list");
 
    for(let j=0;j<data.displays.length;j++){
+    // 디스플레이(모니터) 정보 불러오기
     let displayItemHead = document.createElement("li");
     let displayInfoOutput = document.createElement("ul");
     displayItemHead.id = `display-item-${j}`;
@@ -190,6 +196,7 @@ function loadSysInfo(){
    }
 
   })).then(si.diskLayout().then(data => {
+   // 저장장치 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "저장장치 정보 불러오는 중...";
  
    for(let d=0;d<data.length;d++){
@@ -220,6 +227,8 @@ function loadSysInfo(){
     diskSizeOutput.innerHTML = `저장 용량 : ${diskSize}`;
     diskFirmwareRevOutput.innerHTML = `펌웨어 버전 : ${diskFirmwareRev}`;
 
+    // 윈도우 환경에서 NVMe SSD의 실제 일련번호 가져오기. 일부 윈도우 버전에서 NVMe 일련번호가 제대로 표시되지 않는 경우(해당 장치의 EUI-64/NGUID 값이 대신 표시)가 있어 PowerShell을 통해 가져옴.
+    // 참고 URL: https://www.dell.com/support/kbdoc/en-us/000218659/windows-reported-serial-number-does-not-match-serial-number-printed-on-nvme-drive
     if(sysinfo.platform == "win32" && diskInterface.toLowerCase() == "nvme"){
       execFile("powershell.exe",["-Command",`Get-PhysicalDisk -SerialNumber '${diskSerialNo}' | Select -Property AdapterSerialNumber`],(err,stdout,stderr) => {
        diskSerialNoOutput.innerHTML = `일련번호 : ${stdout.trim().split("\r\n")[2].split(/\s/g)[0]}`;
@@ -249,6 +258,7 @@ function loadSysInfo(){
   
 
   })).then(si.audio().then(data => {
+   // 사운드(오디오) 장치 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "오디오 정보 불러오는 중...";
 
    for(let i=0;i<data.length;i++){
@@ -288,6 +298,7 @@ function loadSysInfo(){
    }
 
   })).then(si.networkInterfaces().then(data => {
+   // 네트워크 장치 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "네트워크 정보 불러오는 중...";
 
    for(let i=0;i<data.length;i++){
@@ -351,6 +362,7 @@ function loadSysInfo(){
     document.getElementById("network-list").appendChild(networkItemHead);
    }
   })).then(si.bluetoothDevices().then(data => {
+   // 블루투스 장치 정보 불러오기
    document.getElementById("loading-progress").innerHTML = "블루투스 장치 정보 불러오는 중...";
 
    for(let i=0;i<data.length;i++){
