@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
- <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <meta charset="utf-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
  <title>System Information</title>
- <link rel="stylesheet" href="./fonts/pretendard/web/static/pretendard.css" />
-<link rel="stylesheet" href="./fonts/nanumsquareneo/web/nanumsquareneo.css" />
+ <link rel="stylesheet" href="./assets/fonts/nanumsquareneo/web/nanumsquareneo.css" />
  <link rel="stylesheet" href="./assets/style.css" />
  </head>
  <body id="mainbody">
   <div id="app-header">
    <h1>시스템 정보 <button onclick="aboutApp();">앱 정보</button></h1>
-   <div id="app-button-main"><button onclick="window.location.reload();">새로고침</button> <button onclick="openSystemSettings();">시스템 설정 열기</button> <button onclick="window.close();">닫기</button></div>
+   <div id="app-button-main"><button type="button" onclick="window.location.reload();">새로고침</button> <button type="button" onclick="openSystemSettings();">시스템 설정 열기</button> <button type="button" onclick="window.close();">닫기</button></div>
   </div>
   <div id="loading">
    <p><img src="./assets/loading.gif" alt="Now Loading..." style="width: 14px; height: auto;" /> 시스템 정보를 불러오는 중입니다...<br />
