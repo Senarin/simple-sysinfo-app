@@ -12,7 +12,8 @@ function createWindow () {
       contextIsolation: false,
       devTools: false
     },
-    menu: null
+    menu: null,
+    resizable: false
   }
 
   mainWindow = new BrowserWindow(windowOptions);

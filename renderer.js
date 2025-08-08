@@ -1,4 +1,5 @@
 const { shell, app } = require("electron");
+const { execFile } = require("child_process");
 const os = require("os");
 const dns = require("dns");
 const si = require("systeminformation");
@@ -101,10 +102,8 @@ function loadSysInfo(){
     gpuItemHead.id = `gpu-item-${i}`;
     gpuItemHead.appendChild(document.createTextNode(`GPU #${i}`));
 
-    let gpuControllerName = data.controllers[i].model;
-    let gpuControllerVendor = data.controllers[i].vendor;
-    let gpuModuleVendor = data.controllers[i].subVendor;
-    let gpuBusType = data.controllers[i].bus;
+    let gpuControllerName = data.controllers[i].model, gpuControllerVendor = data.controllers[i].vendor;
+    let gpuModuleVendor = data.controllers[i].subVendor, gpuBusType = data.controllers[i].bus;
     let gpuMemorySize = `${byteCalc.convertBytes(data.controllers[i].vram * Math.pow(1024,2))} (${(data.controllers[i].vram * Math.pow(1024,2))} 바이트)`;
 
     let gpuNameOutput = document.createElement("li");
@@ -204,17 +203,28 @@ function loadSysInfo(){
     let diskSize = `${byteCalc.convertBytesDec(data[d].size)} (${byteCalc.convertBytes(data[d].size)}, ${data[d].size} 바이트)`;
     let diskVendor = data[d].vendor;
     let diskInterface = data[d].interfaceType;
+    let diskFirmwareRev = data[d].firmwareRevision;
+    let diskSerialNo = data[d].serialNum;
 
     let diskNameOutput = document.createElement("li");
     let diskTypeOutput = document.createElement("li");
     let diskSizeOutput = document.createElement("li");
     let diskVendorOutput = document.createElement("li");
     let diskInterfaceOutput = document.createElement("li");
+    let diskFirmwareRevOutput = document.createElement("li");
+    let diskSerialNoOutput = document.createElement("li");
 
     diskNameOutput.innerHTML = `저장장치 모델명 : ${diskName}`;
     diskTypeOutput.innerHTML = `저장장치 종류 : ${diskType}`;
     diskInterfaceOutput.innerHTML = `저장장치 인터페이스 : ${diskInterface}`;
     diskSizeOutput.innerHTML = `저장 용량 : ${diskSize}`;
+    diskFirmwareRevOutput.innerHTML = `펌웨어 버전 : ${diskFirmwareRev}`;
+
+    if(sysinfo.platform == "win32" && diskInterface.toLowerCase() == "nvme"){
+      execFile("powershell.exe",["-Command",`Get-PhysicalDisk -SerialNumber '${diskSerialNo}' | Select -Property AdapterSerialNumber`],(err,stdout,stderr) => {
+       diskSerialNoOutput.innerHTML = `일련번호 : ${stdout.trim().split("\r\n")[2].split(/\s/g)[0]}`;
+      });
+    }else{diskSerialNoOutput.innerHTML = `일련번호 : ${diskSerialNo}`;}
 
 
     if(typeof diskVendor != "undefined" && diskVendor.length > 0){
@@ -229,12 +239,15 @@ function loadSysInfo(){
     diskInfoOutput.appendChild(diskTypeOutput);
     diskInfoOutput.appendChild(diskInterfaceOutput);
     diskInfoOutput.appendChild(diskSizeOutput);
+    diskInfoOutput.appendChild(diskFirmwareRevOutput);
+    diskInfoOutput.appendChild(diskSerialNoOutput);
 
     diskItemHead.appendChild(diskInfoOutput);
     document.getElementById("storage-list").appendChild(diskItemHead);
 
    }
   
+
   })).then(si.audio().then(data => {
    document.getElementById("loading-progress").innerHTML = "오디오 정보 불러오는 중...";
 
@@ -283,16 +296,11 @@ function loadSysInfo(){
     networkItemHead.id = `network-item-${i}`;
     networkItemHead.appendChild(document.createTextNode(`네트워크 인터페이스 #${i}`));
 
-    let networkIfaceName = data[i].iface;
-    let networkCanonicalName = data[i].ifaceName;
+    let networkIfaceName = data[i].iface, networkCanonicalName = data[i].ifaceName;
     let networkIsDefaultInterface = data[i].default;
-    let networkIP4Address = data[i].ip4;
-    let networkIP4Subnet = data[i].ip4subnet;
-    let networkIP6Address = data[i].ip6;
-    let networkIP6Subnet = data[i].ip6subnet;
-    let networkMacAddress = data[i].mac;
-    let networkType = data[i].type;
-    let networkIsDhcp = data[i].dhcp;
+    let networkIP4Address = data[i].ip4, networkIP4Subnet = data[i].ip4subnet;
+    let networkIP6Address = data[i].ip6, networkIP6Subnet = data[i].ip6subnet;
+    let networkMacAddress = data[i].mac, networkType = data[i].type, networkIsDhcp = data[i].dhcp;
     let networkDNSSuffix = data[i].dnsSuffix;
 
     let networkIfaceNameOutput = document.createElement("li");
