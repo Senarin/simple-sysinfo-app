@@ -22,6 +22,7 @@
     position: fixed;
     justify-content: space-between;
     align-items: center;
+    app-region: drag;
     width: 100%;
     background-color: var(--tab-color);
     z-index: 2;
@@ -47,6 +48,7 @@
     color: white;
     padding: 0.5em 1em;
     cursor: pointer;
+    app-region: no-drag;
   }
 
   button:hover{background-color: var(--doc-color);}

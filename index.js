@@ -13,7 +13,8 @@ function createWindow () {
       devTools: false
     },
     menu: null,
-    resizable: false
+    resizable: false,
+    frame: false
   }
 
   mainWindow = new BrowserWindow(windowOptions);
