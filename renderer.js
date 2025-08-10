@@ -26,7 +26,9 @@ const byteCalc = {
 function openSystemSettings(){
  let sysPlatform = os.platform();
  switch(sysPlatform.toLowerCase()){
+  // 윈도우 환경
   case "win32": shell.openExternal("ms-settings:"); break;
+  // MacOS 환경
   case "darwin": shell.openExternal("x-apple.systempreferences:com.apple.preference.general",{activate: true}); break;
   case "linux": // 리눅스의 경우, 데스크탑 환경에 따라 다르게 처리
    switch(process.env.XDG_CURRENT_DESKTOP.toLowerCase()){
