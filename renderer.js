@@ -1,5 +1,5 @@
 const { shell, app } = require("electron");
-const { execFile } = require("child_process");
+const { execFile, exec, spawn } = require("child_process");
 const os = require("os");
 const dns = require("dns");
 const si = require("systeminformation");
@@ -34,11 +34,11 @@ function openSystemSettings(){
    switch(process.env.XDG_CURRENT_DESKTOP.toLowerCase()){
     case "gnome": 
     case "ubuntu:gnome": // 우분투의 경우
-     shell.openPath("gnome-control-center"); break;
-    case "kde": shell.openPath("systemsettings5"); break;
-    case "xfce": shell.openPath("xfce4-settings-manager"); break;
-    case "mate": shell.openPath("mate-control-center"); break;
-    case "cinnamon": shell.openPath("cinnamon-settings"); break;
+     execFile("gnome-control-center"); break;
+    case "kde": execFile("systemsettings5"); break;
+    case "xfce": execFile("xfce4-settings-manager"); break;
+    case "mate": execFile("mate-control-center"); break;
+    case "cinnamon": execFile("cinnamon-settings"); break;
     default: alert("해당 기능을 지원하지 않는 데스크탑 환경입니다. 시스템 설정을 열 수 없습니다."); break;
    }
   break;
