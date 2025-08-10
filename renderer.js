@@ -32,7 +32,9 @@ function openSystemSettings(){
   case "darwin": shell.openExternal("x-apple.systempreferences:com.apple.preference.general",{activate: true}); break;
   case "linux": // 리눅스의 경우, 데스크탑 환경에 따라 다르게 처리
    switch(process.env.XDG_CURRENT_DESKTOP.toLowerCase()){
-    case "gnome": shell.openPath("gnome-control-center"); break;
+    case "gnome": 
+    case "ubuntu:gnome": // 우분투의 경우
+     shell.openPath("gnome-control-center"); break;
     case "kde": shell.openPath("systemsettings5"); break;
     case "xfce": shell.openPath("xfce4-settings-manager"); break;
     case "mate": shell.openPath("mate-control-center"); break;
