@@ -28,7 +28,16 @@ function openSystemSettings(){
  switch(sysPlatform.toLowerCase()){
   case "win32": shell.openExternal("ms-settings:"); break;
   case "darwin": shell.openExternal("x-apple.systempreferences:com.apple.preference.general",{activate: true}); break;
-  case "linux": shell.openPath("gnome-control-center"); break;
+  case "linux": // 리눅스의 경우, 데스크탑 환경에 따라 다르게 처리
+   switch(process.env.XDG_CURRENT_DESKTOP.toLowerCase()){
+    case "gnome": shell.openPath("gnome-control-center"); break;
+    case "kde": shell.openPath("systemsettings5"); break;
+    case "xfce": shell.openPath("xfce4-settings-manager"); break;
+    case "mate": shell.openPath("mate-control-center"); break;
+    case "cinnamon": shell.openPath("cinnamon-settings"); break;
+    default: alert("해당 기능을 지원하지 않는 데스크탑 환경입니다. 시스템 설정을 열 수 없습니다."); break;
+   }
+  break;
   default: alert("해당 기능을 지원하지 않는 운영체제입니다. 시스템 설정을 열 수 없습니다."); break;
  }
 
