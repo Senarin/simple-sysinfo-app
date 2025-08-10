@@ -11,10 +11,10 @@
     "build": "electron-builder"
   },
   "dependencies": {
+    "electron-reload": "^2.0.0-alpha.1",
     "systeminformation": "^5.27.7"
   },
   "devDependencies": {
-    "@electron/fuses": "^1.8.0",
     "electron": "^37.2.6",
     "electron-builder": "^26.0.12"
   },

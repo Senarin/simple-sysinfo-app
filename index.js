@@ -1,6 +1,9 @@
 const { app, BrowserWindow } = require('electron');
+const electronReload = require("electron-reload")
 
 let mainWindow = null;
+
+electronReload(__dirname);
 
 function createWindow () {
   const windowOptions = {
